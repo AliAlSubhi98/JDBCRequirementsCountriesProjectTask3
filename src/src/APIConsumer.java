@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 
@@ -53,7 +54,23 @@ public class APIConsumer {
 					System.out.println("independent: " + ObjList.independent);
 					System.out.println("status: " + ObjList.status);
 					System.out.println("unMember: " + ObjList.unMember);
-
+					if (ObjList.currencies != null) {
+						for (String key : ObjList.currencies.keySet()) {
+							System.out.println(key + " name: " + ObjList.currencies.get(key).name + " symbol: "
+									+ ObjList.currencies.get(key).symbol);
+						}
+					}
+					System.out.println("root: " + ObjList.idd.root);
+					if (ObjList.idd.suffixes != null) {
+						for (String idd : ObjList.idd.suffixes) {
+							System.out.println("suffixes: " + idd);
+						}
+					}
+					if (ObjList.capital != null) {
+						for (String capital : ObjList.capital) {
+							System.out.println(capital);
+						}
+					}
 					System.out.println("--------------");
 
 				}
@@ -73,5 +90,8 @@ class MyObject {
 	boolean independent;
 	String status;
 	boolean unMember;
-	
+	HashMap<String, Language2> currencies;
+	Idd idd;
+	String capital[];
+
 }

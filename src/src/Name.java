@@ -12,3 +12,13 @@ class Language{
 	String official;
 	String common;
 }
+
+class Language2{
+	String name;
+	String symbol;
+}
+
+class Idd{
+	String root;
+	String suffixes[];
+}
