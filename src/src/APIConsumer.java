@@ -39,9 +39,20 @@ public class APIConsumer {
 				System.out.println(ObjList.name.official);
 				if (ObjList.name.nativeName != null) {
 					for (String key : ObjList.name.nativeName.keySet()) {
-						System.out.println( key + ": Official: " + ObjList.name.nativeName.get(key).official + " Common: "
-								+ ObjList.name.nativeName.get(key).common);
+						System.out.println(key + ": Official: " + ObjList.name.nativeName.get(key).official
+								+ " Common: " + ObjList.name.nativeName.get(key).common);
 					}
+					if (ObjList.tld != null) {
+						for (String tld : ObjList.tld) {
+							System.out.println("tld: " + tld);
+						}
+					}
+					System.out.println("cca2: " + ObjList.cca2);
+					System.out.println("ccn3: " + ObjList.ccn3);
+					System.out.println("cca3: " + ObjList.cca3);
+					System.out.println("independent: " + ObjList.independent);
+					System.out.println("status: " + ObjList.status);
+					System.out.println("unMember: " + ObjList.unMember);
 
 					System.out.println("--------------");
 
@@ -55,4 +66,12 @@ public class APIConsumer {
 
 class MyObject {
 	Name name;
+	String tld[];
+	String cca2;
+	String ccn3;
+	String cca3;
+	boolean independent;
+	String status;
+	boolean unMember;
+	
 }
