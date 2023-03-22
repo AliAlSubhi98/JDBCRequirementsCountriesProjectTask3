@@ -68,11 +68,25 @@ public class APIConsumer {
 					}
 					if (ObjList.capital != null) {
 						for (String capital : ObjList.capital) {
-							System.out.println(capital);
+							System.out.println("capital: " + capital);
 						}
 					}
+					if (ObjList.altSpellings != null) {
+						for (String altSpellings : ObjList.altSpellings) {
+							System.out.println("altSpellings: " + altSpellings);
+						}
+					}
+					System.out.println("region: " + ObjList.region);
+					System.out.println("subregion: " + ObjList.subregion);
+					for(String key : ObjList.languages.keySet()) {
+						System.out.println(key +" : " + ObjList.languages.get(key) );
+					}
+					
+					for(String key : ObjList.translations.keySet()) {
+						System.out.println(key + "\nofficial: " + ObjList.translations.get(key).official +",\ncommon: "+ ObjList.translations.get(key).common);
+					}
 					System.out.println("--------------");
-
+					
 				}
 			}
 		} catch (Exception e) {
@@ -93,5 +107,10 @@ class MyObject {
 	HashMap<String, Language2> currencies;
 	Idd idd;
 	String capital[];
+	String altSpellings[];
+	String region;
+	String subregion;
+	HashMap<String, String> languages;
+	HashMap<String , Language> translations;
 
 }
