@@ -22,3 +22,14 @@ class Idd{
 	String root;
 	String suffixes[];
 }
+
+
+class languagefm{
+	String f;
+	String m;
+}
+
+class Maps{
+	String googleMaps;
+	String openStreetMaps;
+}

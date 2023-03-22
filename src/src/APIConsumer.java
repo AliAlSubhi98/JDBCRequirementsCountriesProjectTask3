@@ -89,7 +89,7 @@ public class APIConsumer {
 					if (ObjList.latlng != null) {
 						System.out.println("latlng: ");
 						for (double latlng : ObjList.latlng) {
-							System.out.println(  latlng);
+							System.out.println(latlng);
 						}
 					}
 					System.out.println("landlocked: " + ObjList.landlocked);
@@ -100,6 +100,24 @@ public class APIConsumer {
 						}
 					}
 					System.out.println("area: " + ObjList.area);
+
+					if (ObjList.demonyms != null) {
+						for (String key : ObjList.demonyms.keySet()) {
+							System.out.println(
+									key + " f: " + ObjList.demonyms.get(key).f + " m: " + ObjList.demonyms.get(key).f);
+						}
+					}
+					System.out.println(ObjList.flag);
+					System.out.println(ObjList.maps.googleMaps + "\n" + ObjList.maps.openStreetMaps);
+					System.out.println("population: " + ObjList.population);
+
+					if (ObjList.gini != null) {
+						for (String key : ObjList.gini.keySet()) {
+							System.out.println("gini: " + key +" "+ ObjList.gini.get(key));
+						}
+					}
+					
+					System.out.println("fifa: " + ObjList.fifa);
 					System.out.println("--------------");
 
 				}
@@ -131,4 +149,10 @@ class MyObject {
 	boolean landlocked;
 	String borders[];
 	double area;
+	HashMap<String, languagefm> demonyms;
+	String flag;
+	Maps maps;
+	int population;
+	HashMap<String, Float> gini;
+	String fifa;
 }
