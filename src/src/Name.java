@@ -33,3 +33,25 @@ class Maps{
 	String googleMaps;
 	String openStreetMaps;
 }
+class Car{
+	String signs[];
+	String side;
+}
+class Flags{
+	String png;
+	String svg;
+	String alt;
+
+}
+class CoatOfArms{
+	String png;
+	String svg;
+}
+class CapitalInfo{
+	double latlng[];
+}
+class PostalCode{
+	String format;
+	String regex;
+	
+}

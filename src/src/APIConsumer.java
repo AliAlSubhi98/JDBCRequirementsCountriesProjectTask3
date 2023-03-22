@@ -113,13 +113,51 @@ public class APIConsumer {
 
 					if (ObjList.gini != null) {
 						for (String key : ObjList.gini.keySet()) {
-							System.out.println("gini: " + key +" "+ ObjList.gini.get(key));
+							System.out.println("gini: " + key + " " + ObjList.gini.get(key));
 						}
 					}
-					
-					System.out.println("fifa: " + ObjList.fifa);
-					System.out.println("--------------");
 
+					System.out.println("fifa: " + ObjList.fifa);
+
+					if (ObjList.car.signs != null) {
+						for (String car : ObjList.car.signs) {
+							System.out.println("car signs: " + car);
+						}
+					}
+					System.out.println(ObjList.car.side);
+
+					System.out.println("timezones: ");
+					for (String timezones : ObjList.timezones) {
+						System.out.println(timezones);
+					}
+
+					for (String continents : ObjList.continents) {
+						System.out.println("continents: " + continents);
+					}
+
+					System.out.println("flags");
+					System.out.println(ObjList.flags.png);
+					System.out.println(ObjList.flags.svg);
+					System.out.println(ObjList.flags.alt);
+
+					System.out.println("coatOfArms:");
+					System.out.println(ObjList.coatOfArms.png);
+					System.out.println(ObjList.coatOfArms.svg);
+
+					System.out.println("startOfWeek: " + ObjList.startOfWeek);
+
+					if (ObjList.capitalInfo.latlng != null) {
+						for (double latlng : ObjList.capitalInfo.latlng) {
+							System.out.println(latlng);
+						}
+					}
+					if(ObjList.postalCode != null) {
+					System.out.println(ObjList.postalCode.format);
+					System.out.println(ObjList.postalCode.regex);
+					}
+					
+
+					System.out.println("--------------");
 				}
 			}
 		} catch (Exception e) {
@@ -155,4 +193,12 @@ class MyObject {
 	int population;
 	HashMap<String, Float> gini;
 	String fifa;
+	Car car;
+	String timezones[];
+	String continents[];
+	Flags flags;
+	CoatOfArms coatOfArms;
+	String startOfWeek;
+	CapitalInfo capitalInfo;
+	PostalCode postalCode;
 }
