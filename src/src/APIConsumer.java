@@ -78,15 +78,30 @@ public class APIConsumer {
 					}
 					System.out.println("region: " + ObjList.region);
 					System.out.println("subregion: " + ObjList.subregion);
-					for(String key : ObjList.languages.keySet()) {
-						System.out.println(key +" : " + ObjList.languages.get(key) );
+					for (String key : ObjList.languages.keySet()) {
+						System.out.println(key + " : " + ObjList.languages.get(key));
 					}
-					
-					for(String key : ObjList.translations.keySet()) {
-						System.out.println(key + "\nofficial: " + ObjList.translations.get(key).official +",\ncommon: "+ ObjList.translations.get(key).common);
+
+					for (String key : ObjList.translations.keySet()) {
+						System.out.println(key + "\nofficial: " + ObjList.translations.get(key).official + ",\ncommon: "
+								+ ObjList.translations.get(key).common);
 					}
+					if (ObjList.latlng != null) {
+						System.out.println("latlng: ");
+						for (double latlng : ObjList.latlng) {
+							System.out.println(  latlng);
+						}
+					}
+					System.out.println("landlocked: " + ObjList.landlocked);
+					if (ObjList.borders != null) {
+						System.out.println("borders: ");
+						for (String borders : ObjList.borders) {
+							System.out.println(borders);
+						}
+					}
+					System.out.println("area: " + ObjList.area);
 					System.out.println("--------------");
-					
+
 				}
 			}
 		} catch (Exception e) {
@@ -111,6 +126,9 @@ class MyObject {
 	String region;
 	String subregion;
 	HashMap<String, String> languages;
-	HashMap<String , Language> translations;
-
+	HashMap<String, Language> translations;
+	double latlng[];
+	boolean landlocked;
+	String borders[];
+	double area;
 }
