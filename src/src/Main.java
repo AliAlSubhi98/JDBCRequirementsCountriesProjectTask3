@@ -34,9 +34,11 @@ public class Main {
 				break;
 				
 			case 2:
+				APIConsumer.showApi();
 				break;
 				
 			case 3:
+				System.out.println(APIConsumer.countries.get(0).name.common);
 				break;
 				
 			case 0:

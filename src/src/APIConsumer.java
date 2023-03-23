@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
 
 public class APIConsumer {
+	static ArrayList<MyObject> countries = new ArrayList<MyObject>(); 
 	static void showApi() {
 		String apiUrl = "https://restcountries.com/v3.1/all";
 		try {
@@ -156,7 +158,7 @@ public class APIConsumer {
 					System.out.println(ObjList.postalCode.regex);
 					}
 					
-
+					countries.add(ObjList);
 					System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
 				}
 			}
