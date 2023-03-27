@@ -14,6 +14,7 @@ public class Main {
 			System.out.println(".........................................................");
 			System.out.println("1.  Initialize database");
 			System.out.println("2.  Fetch Data of countries from API");
+			System.out.println("3.  INSERT INTO JDBC");
 			System.out.println("0.  Exit program");
 			System.out.println("=========================================================");
 
@@ -38,7 +39,7 @@ public class Main {
 				break;
 				
 			case 3:
-				System.out.println(APIConsumer.countries.get(0).name.common);
+				JDBC.INSERT_INTO_countries();
 				break;
 				
 			case 0:

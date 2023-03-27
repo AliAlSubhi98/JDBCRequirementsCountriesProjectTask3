@@ -53,6 +53,7 @@ public class APIConsumer {
 					System.out.println("cca2: " + ObjList.cca2);
 					System.out.println("ccn3: " + ObjList.ccn3);
 					System.out.println("cca3: " + ObjList.cca3);
+					System.out.println("cioc: " + ObjList.cioc);
 					System.out.println("independent: " + ObjList.independent);
 					System.out.println("status: " + ObjList.status);
 					System.out.println("unMember: " + ObjList.unMember);
@@ -174,6 +175,7 @@ class MyObject {
 	String cca2;
 	String ccn3;
 	String cca3;
+	String cioc;
 	boolean independent;
 	String status;
 	boolean unMember;
