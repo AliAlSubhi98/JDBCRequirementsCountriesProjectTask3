@@ -61,14 +61,14 @@ public class JDBC {
 	            if (!rs.next()) {
 	                // Create table if it doesn't exist
 	                String sql3 = "create table countries (\r\n"
-	                		+ "	id int primary key identity(1,1),\r\n"
+	                		+ "	id int primary key ,\r\n"
 	                		+ "	common_name varchar(255),\r\n"
 	                		+ "	official_name varchar(255),\r\n"
 	                		+ "	cca2 varchar(5),\r\n"
 	                		+ "	ccn3 varchar(5),\r\n"
 	                		+ "	cca3 varchar(5),\r\n"
 	                		+ "	cioc varchar(5),\r\n"
-	                		+ "	independent binary,\r\n"
+	                		+ "	independent BIT,\r\n"
 	                		+ "	country_status varchar(20),\r\n"
 	                		+ "	un_member binary,\r\n"
 	                		+ "	idd_root varchar(5),\r\n"
@@ -186,8 +186,7 @@ public class JDBC {
 		Connection con = null;
 
 		try {
-			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-			DriverManager.registerDriver(driver);
+			
 
 			con = DriverManager.getConnection(url, userName, password);
 			Statement st = con.createStatement();
@@ -196,69 +195,83 @@ public class JDBC {
 			url += ";databaseName=" + databaseName;
 			con = DriverManager.getConnection(url, userName, password);
 
-			String sql3 = "INSERT INTO countries(common_name, official_name, cca2, ccn3, cca3, cioc, independent, country_status, un_member, idd_root, region, subregion, latitude, logitude, land_locked, area, eng_f, eng_m, fra_f, fra_m, flag, google_maps, open_street_maps, c_population, gini_year, gini_val, fifa, car_side, flag_png, flag_svg, flag_alt, coa_png, coa_svg, start_of_week, capital_lat, capital_long, postal_format, postal_regex) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql3 = "INSERT INTO countries(common_name, official_name, cca2, ccn3, cca3, cioc, independent, country_status, un_member, idd_root, region, subregion, latitude, logitude, land_locked, area, eng_f, eng_m, fra_f, fra_m, flag, google_maps, open_street_maps, c_population, gini_year, gini_val, fifa, car_side, flag_png, flag_svg, flag_alt, coa_png, coa_svg, start_of_week, capital_lat, capital_long, postal_format, postal_regex,id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = con.prepareStatement(sql3);
+			
+			String sql4 = "insert into timezones(tz,cid) values(?,?);";
+			PreparedStatement ps2 = con.prepareStatement(sql4);
+			
 			ArrayList<MyObject> countries = APIConsumer.countries;
-			for (MyObject countriesList : countries) {
-				ps.setString(1, countriesList.name.common);
-				ps.setString(2, countriesList.name.official);
-				ps.setString(3, countriesList.cca2);
-				ps.setString(4, countriesList.ccn3);
-				ps.setString(5, countriesList.cca3);
-				ps.setString(6, countriesList.cioc);
-				ps.setBoolean(7, countriesList.independent);
-				ps.setString(8, countriesList.status);
-				ps.setBoolean(9, countriesList.unMember);
-				ps.setString(10, countriesList.idd.root);
-				ps.setString(11, countriesList.region);
-				ps.setString(12, countriesList.subregion);
-				if(countriesList.capitalInfo.latlng != null) {
-					ps.setDouble(13, countriesList.latlng[0]);
-					ps.setDouble(14, countriesList.latlng[1]);
+			for (int i=0 ; i<countries.size() ; i++) {
+				ps.setInt(39, i);
+				ps.setString(1, countries.get(i).name.common);
+				ps.setString(2, countries.get(i).name.official);
+				ps.setString(3, countries.get(i).cca2);
+				ps.setString(4, countries.get(i).ccn3);
+				ps.setString(5, countries.get(i).cca3);
+				ps.setString(6, countries.get(i).cioc);
+				ps.setBoolean(7, countries.get(i).independent);
+				ps.setString(8, countries.get(i).status);
+				ps.setBoolean(9, countries.get(i).unMember);
+				ps.setString(10, countries.get(i).idd.root);
+				ps.setString(11, countries.get(i).region);
+				ps.setString(12, countries.get(i).subregion);
+				if(countries.get(i).capitalInfo.latlng != null) {
+					ps.setDouble(13, countries.get(i).latlng[0]);
+					ps.setDouble(14, countries.get(i).latlng[1]);
 				}
-				ps.setBoolean(15, countriesList.landlocked);
-				ps.setDouble(16, countriesList.area);
-				if(countriesList.demonyms != null) {
-					if (countriesList.demonyms.get("eng") != null) {
-						ps.setString(17, countriesList.demonyms.get("eng").f);
-						ps.setString(18, countriesList.demonyms.get("eng").m);
+				ps.setBoolean(15, countries.get(i).landlocked);
+				ps.setDouble(16, countries.get(i).area);
+				if(countries.get(i).demonyms != null) {
+					if (countries.get(i).demonyms.get("eng") != null) {
+						ps.setString(17, countries.get(i).demonyms.get("eng").f);
+						ps.setString(18, countries.get(i).demonyms.get("eng").m);
 					}
-					if(countriesList.demonyms.get("fra") != null) {
-						ps.setString(19, countriesList.demonyms.get("fra").f);
-						ps.setString(20, countriesList.demonyms.get("fra").m);
+					if(countries.get(i).demonyms.get("fra") != null) {
+						ps.setString(19, countries.get(i).demonyms.get("fra").f);
+						ps.setString(20, countries.get(i).demonyms.get("fra").m);
 					}
 				}
-				ps.setString(21, countriesList.flag);
-				ps.setString(22, countriesList.maps.googleMaps);
-				ps.setString(23, countriesList.maps.openStreetMaps);
-				ps.setInt(24, countriesList.population);
-				if(countriesList.gini != null) {
-					for(String key : countriesList.gini.keySet()){
+				ps.setString(21, countries.get(i).flag);
+				ps.setString(22, countries.get(i).maps.googleMaps);
+				ps.setString(23, countries.get(i).maps.openStreetMaps);
+				ps.setInt(24, countries.get(i).population);
+				if(countries.get(i).gini != null) {
+					for(String key : countries.get(i).gini.keySet()){
 						ps.setString(25, key);
-						ps.setFloat(26, countriesList.gini.get(key));
+						ps.setFloat(26, countries.get(i).gini.get(key));
 					}
 				}
-				ps.setString(27, countriesList.fifa);
-				ps.setString(28, countriesList.car.side);
-				ps.setString(29, countriesList.flags.png);
-				ps.setString(30, countriesList.flags.svg);
-				ps.setString(31, countriesList.flags.alt);
-				ps.setString(32, countriesList.coatOfArms.png);
-				ps.setString(33, countriesList.coatOfArms.svg);
-				ps.setString(34, countriesList.startOfWeek);
-				if(countriesList.capitalInfo.latlng != null) {
-					ps.setDouble(35, countriesList.capitalInfo.latlng[0]);
-					ps.setDouble(36, countriesList.capitalInfo.latlng[1]);
+				ps.setString(27, countries.get(i).fifa);
+				ps.setString(28, countries.get(i).car.side);
+				ps.setString(29, countries.get(i).flags.png);
+				ps.setString(30, countries.get(i).flags.svg);
+				ps.setString(31, countries.get(i).flags.alt);
+				ps.setString(32, countries.get(i).coatOfArms.png);
+				ps.setString(33, countries.get(i).coatOfArms.svg);
+				ps.setString(34, countries.get(i).startOfWeek);
+				if(countries.get(i).capitalInfo.latlng != null) {
+					ps.setDouble(35, countries.get(i).capitalInfo.latlng[0]);
+					ps.setDouble(36, countries.get(i).capitalInfo.latlng[1]);
 				}
-				if(countriesList.postalCode != null) {
-					ps.setString(37, countriesList.postalCode.format);
-					ps.setString(38, countriesList.postalCode.regex);
+				if(countries.get(i).postalCode != null) {
+					ps.setString(37, countries.get(i).postalCode.format);
+					ps.setString(38, countries.get(i).postalCode.regex);
 				}
 
-
+				for(int j = 0 ; j<countries.get(i).timezones.length; j++) {
+					ps2.setString(1, countries.get(i).timezones[j]);
+					ps2.setInt(2, i);
+					ps2.executeUpdate();
+				}
 				ps.executeUpdate();
 			}
-			System.out.println("Data inserted into universities table!");
+			System.out.println("Data inserted into  table!");
+			
+
+			
+
+			
 			con.close();
 		} catch (Exception ex) {
 			System.err.println(ex);
