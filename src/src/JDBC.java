@@ -119,24 +119,24 @@ public class JDBC {
 	                		+ "create table translations(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
 	                		+ "	tran_key varchar(5),\r\n"
-	                		+ "	tran_official varchar(20),\r\n"
-	                		+ "	tran_common varchar(20),\r\n"
+	                		+ "	tran_official varchar(255),\r\n"
+	                		+ "	tran_common varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table languages (\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
 	                		+ "	lan_key varchar(5),\r\n"
-	                		+ "	lan_name varchar(15),\r\n"
+	                		+ "	lan_name varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table alt_spellings(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
-	                		+ "	spelling varchar(20),\r\n"
+	                		+ "	spelling varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table capitals (\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
-	                		+ "	capital_name varchar(20),\r\n"
+	                		+ "	capital_name varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table native_names(\r\n"
@@ -206,6 +206,19 @@ public class JDBC {
 			
 			String sql6 = "insert into borders(border,cid) values (?,?);";
 			PreparedStatement ps4 = con.prepareStatement(sql6);
+			
+			String sql7 = "insert into translations (tran_key,tran_official,tran_common,cid) values (?,?,?,?);";
+			PreparedStatement ps5 = con.prepareStatement(sql7);
+			
+			String sql8 = "insert into languages (lan_key,lan_name,cid) values (?,?,?);";
+			PreparedStatement ps6 = con.prepareStatement(sql8);
+			
+			String sql9 = "insert into alt_spellings (spelling,cid) values (?,?);";
+			PreparedStatement ps7 = con.prepareStatement(sql9);
+
+			String sql10 ="insert into capitals (capital_name,cid) values (?,?);";
+			PreparedStatement ps8 = con.prepareStatement(sql10);
+
 
 			
 
@@ -285,8 +298,44 @@ public class JDBC {
 					}
 				}
 				
+				if (countries.get(i).borders != null) {
+					for(int j=0 ; j<countries.get(i).borders.length ;j++) {
+						ps4.setString(1, countries.get(i).borders[j]);
+						ps4.setInt(2, i);
+						ps4.executeUpdate();
+					}
+				}
 				
+				for(String key : countries.get(i).translations.keySet()) {
+					ps5.setString(1, key);
+					ps5.setString(2, countries.get(i).translations.get(key).official);
+					ps5.setString(3, countries.get(i).translations.get(key).common);
+					ps5.setInt(4, i);
+					ps5.executeUpdate();
+				}
 				
+				for(String key : countries.get(i).languages.keySet()) {
+					ps6.setString(1, key);
+					ps6.setString(2, countries.get(i).languages.get(key));
+					ps6.setInt(3, i);
+					ps6.executeUpdate();
+				}
+				
+				if (countries.get(i).altSpellings != null) {
+					for (int j = 0; j < countries.get(i).altSpellings.length; j++) {
+						ps7.setString(1, countries.get(i).altSpellings[j]);
+						ps7.setInt(2, i);
+						ps7.executeUpdate();
+					}
+				}
+				
+				if (countries.get(i).capital != null) {
+					for (int j = 0; j < countries.get(i).capital.length; j++) {
+						ps8.setString(1, countries.get(i).capital[j]);
+						ps8.setInt(2, i);
+						ps8.executeUpdate();
+					}
+				}
 				ps.executeUpdate();
 			}
 			System.out.println("Data inserted into  table!");
