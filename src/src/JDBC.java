@@ -201,6 +201,14 @@ public class JDBC {
 			String sql4 = "insert into timezones(tz,cid) values(?,?);";
 			PreparedStatement ps2 = con.prepareStatement(sql4);
 			
+			String sql5 = "insert into car_signs(csign,cid) values (?,?);";
+			PreparedStatement ps3 = con.prepareStatement(sql5);
+			
+			String sql6 = "insert into borders(border,cid) values (?,?);";
+			PreparedStatement ps4 = con.prepareStatement(sql6);
+
+			
+
 			ArrayList<MyObject> countries = APIConsumer.countries;
 			for (int i=0 ; i<countries.size() ; i++) {
 				ps.setInt(39, i);
@@ -242,6 +250,10 @@ public class JDBC {
 						ps.setFloat(26, countries.get(i).gini.get(key));
 					}
 				}
+				else {
+					ps.setString(25, null);
+					ps.setFloat(26, 0);
+				}
 				ps.setString(27, countries.get(i).fifa);
 				ps.setString(28, countries.get(i).car.side);
 				ps.setString(29, countries.get(i).flags.png);
@@ -264,6 +276,17 @@ public class JDBC {
 					ps2.setInt(2, i);
 					ps2.executeUpdate();
 				}
+				
+				if (countries.get(i).car.signs != null) {
+					for (int j = 0; j < countries.get(i).car.signs.length; j++) {
+						ps3.setString(1, countries.get(i).car.signs[j]);
+						ps3.setInt(2, i);
+						ps3.executeUpdate();
+					}
+				}
+				
+				
+				
 				ps.executeUpdate();
 			}
 			System.out.println("Data inserted into  table!");
