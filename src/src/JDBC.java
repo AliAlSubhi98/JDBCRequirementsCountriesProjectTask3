@@ -142,25 +142,25 @@ public class JDBC {
 	                		+ "create table native_names(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
 	                		+ "	name_key varchar(5),\r\n"
-	                		+ "	common_namme varchar(30),\r\n"
+	                		+ "	common_namme varchar(255),\r\n"
 	                		+ "	official_name varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table tlds(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
-	                		+ "	tld varchar(5),\r\n"
+	                		+ "	tld varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table currencies(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
 	                		+ "	currency_key varchar(5),\r\n"
-	                		+ "	currency_name varchar(20),\r\n"
+	                		+ "	currency_name varchar(255),\r\n"
 	                		+ "	symbol varchar(20),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");\r\n"
 	                		+ "create table suffixes(\r\n"
 	                		+ "	id int primary key identity(1,1),\r\n"
-	                		+ "	suf varchar(5),\r\n"
+	                		+ "	suf varchar(255),\r\n"
 	                		+ "	cid int\r\n"
 	                		+ ");";
 	                st2.executeUpdate(sql3);
@@ -219,8 +219,18 @@ public class JDBC {
 			String sql10 ="insert into capitals (capital_name,cid) values (?,?);";
 			PreparedStatement ps8 = con.prepareStatement(sql10);
 
+			String sql11 = "insert into native_names (name_key,common_namme,official_name,cid) values (?,?,?,?);";
+			PreparedStatement ps9 = con.prepareStatement(sql11);
 
-			
+			String sql12 = "insert into tlds(tld,cid) values (?,?);";
+			PreparedStatement ps10 = con.prepareStatement(sql12);
+
+			String sql13 = "insert into currencies(currency_key,currency_name,symbol,cid) values (?,?,?,?);";
+			PreparedStatement ps11 = con.prepareStatement(sql13);
+
+			String sql14 = "insert into suffixes(suf,cid) values (?,?);";
+			PreparedStatement ps12 = con.prepareStatement(sql14);
+
 
 			ArrayList<MyObject> countries = APIConsumer.countries;
 			for (int i=0 ; i<countries.size() ; i++) {
@@ -336,6 +346,41 @@ public class JDBC {
 						ps8.executeUpdate();
 					}
 				}
+				
+				for(String key : countries.get(i).name.nativeName.keySet()) {
+					ps9.setString(1, key);
+					ps9.setString(2, countries.get(i).name.nativeName.get(key).common);
+					ps9.setString(3, countries.get(i).name.nativeName.get(key).official);
+					ps9.setInt(4, i);
+					ps9.executeUpdate();
+				}
+				
+				if (countries.get(i).tld != null) {
+					for (int j = 0; j < countries.get(i).tld.length; j++) {
+						ps10.setString(1, countries.get(i).tld[j]);
+						ps10.setInt(2, i);
+						ps10.executeUpdate();
+					}
+				}
+				
+				if (countries.get(i).currencies != null) {
+					for (String key : countries.get(i).currencies.keySet()) {
+						ps11.setString(1, key);
+						ps11.setString(2, countries.get(i).currencies.get(key).name);
+						ps11.setString(3, countries.get(i).currencies.get(key).symbol);
+						ps11.setInt(4, i);
+						ps11.executeUpdate();
+					}
+				}
+
+				if (countries.get(i).idd.suffixes != null) {
+					for (int j = 0; j < countries.get(i).idd.suffixes.length; j++) {
+						ps12.setString(1, countries.get(i).idd.suffixes[j]);
+						ps12.setInt(2, i);
+						ps12.executeUpdate();
+					}
+				}
+
 				ps.executeUpdate();
 			}
 			System.out.println("Data inserted into  table!");
