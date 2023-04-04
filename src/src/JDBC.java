@@ -452,5 +452,44 @@ public class JDBC {
 		}
 	}
 	
+	static public void removeTablesFromDatabase() {
+		
+		System.out.println("TRYING TO REMOVE TABLES FROM DB ");
+
+		String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+		Connection con = null;
+
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			
+			// Update url with the database name
+			url += ";databaseName=" + databaseName;
+			con = DriverManager.getConnection(url, userName, password);
+			Statement st2 = con.createStatement();
+
+			String sql2 = "drop table countries\r\n"
+					+ "drop table alt_spellings	\r\n"
+					+ "drop table borders\r\n"
+					+ "drop table capitals\r\n"
+					+ "drop table car_signs \r\n"
+					+ "drop table currencies\r\n"
+					+ "drop table languages\r\n"
+					+ "drop table native_names\r\n"
+					+ "drop table suffixes\r\n"
+					+ "drop table timezones\r\n"
+					+ "drop table tlds\r\n"
+					+ "drop table translations";
+			st2.executeUpdate(sql2);
+
+			System.out.println("TABLES REMOVED SUCCESSFULLY");
+			con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
+	
+	
+	
 
 }
