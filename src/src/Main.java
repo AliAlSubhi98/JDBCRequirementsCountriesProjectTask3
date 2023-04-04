@@ -17,7 +17,7 @@ public class Main {
 			System.out.println("3.  INSERT INTO JDBC");
 			System.out.println("4.  BACKUP THE DATABASE ");
 			System.out.println("5.  REMOVE TABLES FROM DATABASE");
-			System.out.println("6.  ");
+			System.out.println("6.  FETCH COUNTRIES TABLE FROM DB");
 			System.out.println("0.  Exit program");
 			System.out.println("=========================================================");
 
@@ -51,6 +51,9 @@ public class Main {
 				
 			case 5:
 				JDBC.removeTablesFromDatabase();
+				break;
+			case 6:
+				JDBC.fetchCountriesTablesFromDatabase();
 				break;
 			case 0:
 				System.exit(0);
