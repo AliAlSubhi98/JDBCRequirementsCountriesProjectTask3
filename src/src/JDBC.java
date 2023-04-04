@@ -383,12 +383,69 @@ public class JDBC {
 
 				ps.executeUpdate();
 			}
-			System.out.println("Data inserted into  table!");
+			System.out.println("Data inserted into tables!");
 			
 
 			
 
 			
+			con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
+	
+	public static void printUniversityTable() {
+
+		Connection con = null;
+		try {
+			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+
+			con = DriverManager.getConnection(url, userName, password);
+
+			String sql = "Select * from  countries";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			ResultSet resultSet = st.executeQuery();
+
+			while (resultSet.next()) {
+
+				String alpha_two_code = resultSet.getString("alpha_two_code");
+
+			}
+
+			st.close();
+			con.close();
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+	}
+	
+	static public void backupDatabase() {
+		
+		System.out.println("TRYING TO BACKUP DATABASE ");
+
+		String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+		Connection con = null;
+
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+			
+			// Update url with the database name
+			url += ";databaseName=" + databaseName;
+			con = DriverManager.getConnection(url, userName, password);
+		    Statement st2 = con.createStatement();
+
+		    // Create table if it doesn't exist
+		    String sql2 = "BACKUP DATABASE ali\r\n"
+		    		+ "TO DISK = 'C:\\Users\\Lenovo\\eclipse-workspace\\JDBCRequirementsCountriesProjectTask3\\Backup\\Backup.bak';;";
+		    st2.executeUpdate(sql2);
+			
+			System.out.println("BACKUP DATABASE SUCCESSFULLY");
 			con.close();
 		} catch (Exception ex) {
 			System.err.println(ex);

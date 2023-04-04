@@ -15,6 +15,7 @@ public class Main {
 			System.out.println("1.  Initialize database");
 			System.out.println("2.  Fetch Data of countries from API");
 			System.out.println("3.  INSERT INTO JDBC");
+			System.out.println("4.  BACKUP THE DATABASE ");
 			System.out.println("0.  Exit program");
 			System.out.println("=========================================================");
 
@@ -40,6 +41,10 @@ public class Main {
 				
 			case 3:
 				JDBC.INSERT_INTO_countries();
+				break;
+				
+			case 4:
+				JDBC.backupDatabase();
 				break;
 				
 			case 0:
