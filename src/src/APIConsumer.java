@@ -10,7 +10,8 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 
 public class APIConsumer {
-	static ArrayList<MyObject> countries = new ArrayList<MyObject>(); 
+	static ArrayList<MyObject> countries = new ArrayList<MyObject>();
+
 	static void showApi() {
 		String apiUrl = "https://restcountries.com/v3.1/all";
 		try {
@@ -154,13 +155,14 @@ public class APIConsumer {
 							System.out.println(latlng);
 						}
 					}
-					if(ObjList.postalCode != null) {
-					System.out.println(ObjList.postalCode.format);
-					System.out.println(ObjList.postalCode.regex);
+					if (ObjList.postalCode != null) {
+						System.out.println(ObjList.postalCode.format);
+						System.out.println(ObjList.postalCode.regex);
 					}
-					
+
 					countries.add(ObjList);
-					System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
+					System.out.println(
+							"----------------------------------------------------------------------------------------------------------------------------------------------");
 				}
 			}
 		} catch (Exception e) {

@@ -8,8 +8,8 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		JDBC myJDBC = new JDBC();
 
-		myJDBC.setAccessToDatabase(myJDBC);
-		
+
+
 		while (true) {
 			System.out.println(".........................................................");
 			System.out.println("1.  Initialize database");
@@ -19,6 +19,7 @@ public class Main {
 			System.out.println("5.  REMOVE TABLES FROM DATABASE");
 			System.out.println("6.  FETCH COUNTRIES TABLE FROM DB");
 			System.out.println("7.  SEARCH FROM DATABASE");
+			System.out.println("8.  LOGIN");
 			System.out.println("0.  Exit program");
 			System.out.println("=========================================================");
 
@@ -37,27 +38,30 @@ public class Main {
 			case 1:
 				myJDBC.initializeDatabase();
 				break;
-				
+
 			case 2:
 				APIConsumer.showApi();
 				break;
-				
+
 			case 3:
-				JDBC.INSERT_INTO_countries();
+				myJDBC.INSERT_INTO_countries();
 				break;
-				
+
 			case 4:
-				JDBC.backupDatabase();
+				myJDBC.backupDatabase();
 				break;
-				
+
 			case 5:
-				JDBC.removeTablesFromDatabase();
+				myJDBC.removeTablesFromDatabase();
 				break;
 			case 6:
-				JDBC.fetchCountriesTablesFromDatabase();
+				myJDBC.fetchCountriesTablesFromDatabase();
 				break;
 			case 7:
-				JDBC.searchFromDatabase();
+				myJDBC.searchFromDatabase();
+				break;
+			case 8:
+				myJDBC.loginToDatabase();
 				break;
 			case 0:
 				System.exit(0);
