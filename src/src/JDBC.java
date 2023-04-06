@@ -16,46 +16,45 @@ public class JDBC {
 	static String password;
 	static boolean Login = false;
 
-	//login
+	// login
 	// login
 	public boolean loginToDatabase() {
-	    Scanner sc = new Scanner(System.in);
-	    System.out.println("==================LOGIN TO THE DATABASE==================");
-	    System.out.print("Enter database name: ");
-	    JDBC.databaseName = sc.next();
-	    System.out.print("Enter user name: (sa) ");
-	    JDBC.userName = sc.next();
-	    System.out.print("Enter password: (root)");
-	    JDBC.password = sc.next();
-	    System.out.println("=========================================================");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("==================LOGIN TO THE DATABASE==================");
+		System.out.print("Enter database name: ");
+		JDBC.databaseName = sc.next();
+		System.out.print("Enter user name: (sa) ");
+		JDBC.userName = sc.next();
+		System.out.print("Enter password: (root)");
+		JDBC.password = sc.next();
+		System.out.println("=========================================================");
 
-	    // Test the connection
-	    String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
-	    url += ";databaseName=" + databaseName;
-	    
-	    try {
-	        // Load the SQL Server JDBC driver
-	        Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-	        DriverManager.registerDriver(driver);
+		// Test the connection
+		String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+		url += ";databaseName=" + databaseName;
 
-	        // Connect to the SQL Server instance
-	        Connection con = DriverManager.getConnection(url, userName, password);
+		try {
+			// Load the SQL Server JDBC driver
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
 
-	        // If the connection is successful, set login to true and close the connection
-	        JDBC.Login = true;
-	        con.close();
-	        System.out.println("Successfully logged in to the database.");
-	    } catch (Exception ex) {
-	        System.err.println("Error logging in to the database: " + ex);
-	        JDBC.Login = false;
-	    }
+			// Connect to the SQL Server instance
+			Connection con = DriverManager.getConnection(url, userName, password);
 
-	    return JDBC.Login;
+			// If the connection is successful, set login to true and close the connection
+			JDBC.Login = true;
+			con.close();
+			System.out.println("Successfully logged in to the database.");
+		} catch (Exception ex) {
+			System.err.println("Error logging in to the database: " + ex);
+			JDBC.Login = false;
+		}
+
+		return JDBC.Login;
 	}
 
-
 	public void initializeDatabase() {
-		if (JDBC.Login !=false) {
+		if (JDBC.Login != false) {
 			System.out.println("Initialize Database");
 			Scanner scanner = new Scanner(System.in);
 
@@ -289,14 +288,14 @@ public class JDBC {
 						ps5.setInt(4, i);
 						ps5.executeUpdate();
 					}
-
-					for (String key : countries.get(i).languages.keySet()) {
-						ps6.setString(1, key);
-						ps6.setString(2, countries.get(i).languages.get(key));
-						ps6.setInt(3, i);
-						ps6.executeUpdate();
+					if (countries.get(i).languages != null) {
+						for (String key : countries.get(i).languages.keySet()) {
+							ps6.setString(1, key);
+							ps6.setString(2, countries.get(i).languages.get(key));
+							ps6.setInt(3, i);
+							ps6.executeUpdate();
+						}
 					}
-
 					if (countries.get(i).altSpellings != null) {
 						for (int j = 0; j < countries.get(i).altSpellings.length; j++) {
 							ps7.setString(1, countries.get(i).altSpellings[j]);
@@ -312,15 +311,15 @@ public class JDBC {
 							ps8.executeUpdate();
 						}
 					}
-
-					for (String key : countries.get(i).name.nativeName.keySet()) {
-						ps9.setString(1, key);
-						ps9.setString(2, countries.get(i).name.nativeName.get(key).common);
-						ps9.setString(3, countries.get(i).name.nativeName.get(key).official);
-						ps9.setInt(4, i);
-						ps9.executeUpdate();
+					if (countries.get(i).name.nativeName != null) {
+						for (String key : countries.get(i).name.nativeName.keySet()) {
+							ps9.setString(1, key);
+							ps9.setString(2, countries.get(i).name.nativeName.get(key).common);
+							ps9.setString(3, countries.get(i).name.nativeName.get(key).official);
+							ps9.setInt(4, i);
+							ps9.executeUpdate();
+						}
 					}
-
 					if (countries.get(i).tld != null) {
 						for (int j = 0; j < countries.get(i).tld.length; j++) {
 							ps10.setString(1, countries.get(i).tld[j]);
@@ -389,8 +388,8 @@ public class JDBC {
 		}
 	}
 
-	 public void backupDatabase() {
-		if (JDBC.Login !=false) {
+	public void backupDatabase() {
+		if (JDBC.Login != false) {
 			System.out.println("TRYING TO BACKUP DATABASE ");
 
 			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
@@ -420,8 +419,8 @@ public class JDBC {
 		}
 	}
 
-	 public void removeTablesFromDatabase() {
-		if (JDBC.Login !=false) {
+	public void removeTablesFromDatabase() {
+		if (JDBC.Login != false) {
 			System.out.println("TRYING TO REMOVE TABLES FROM DB ");
 
 			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
@@ -452,8 +451,8 @@ public class JDBC {
 		}
 	}
 
-	 public void fetchCountriesTablesFromDatabase() {
-		if (JDBC.Login !=false) {
+	public void fetchCountriesTablesFromDatabase() {
+		if (JDBC.Login != false) {
 
 			System.out.println("TRYING TO FETCH countries TABLE FROM DATABASE ");
 
@@ -533,7 +532,7 @@ public class JDBC {
 	}
 
 	public void searchFromDatabase() {
-		if (JDBC.Login !=false) {
+		if (JDBC.Login != false) {
 			System.out.println("SEARCH FOR COUNTRIES IN DATABASE");
 
 			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";

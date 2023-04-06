@@ -90,9 +90,9 @@ public class APIConsumer {
 				if (ObjList.subregion != null) {
 					System.out.println("subregion: " + ObjList.subregion);
 				}
-				if (ObjList.languages != null) {
+				if (ObjList.languages != null && !ObjList.languages.isEmpty()) {
 					for (String key : ObjList.languages.keySet()) {
-						System.out.println(key + " : " + ObjList.languages.get(key));
+							System.out.println(key + " : " + ObjList.languages.get(key));
 					}
 				}
 				if (ObjList.translations != null) {
