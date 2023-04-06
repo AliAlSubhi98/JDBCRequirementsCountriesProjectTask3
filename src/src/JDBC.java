@@ -483,5 +483,103 @@ public class JDBC {
 			System.err.println(ex);
 		}
 	}
+	
+	public static void searchFromDatabase() {
+		System.out.println("SEARCH FOR COUNTRIES IN DATABASE");
+
+		String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+		Connection con = null;
+
+		try {
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
+
+			// Update url with the database name
+			url += ";databaseName=" + databaseName;
+			con = DriverManager.getConnection(url, userName, password);
+			Statement st = con.createStatement();
+
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Search by common name (n), region (r)");
+			String searchType = scanner.next().toLowerCase();
+			System.out.println("Enter search term:");
+			String searchTerm = scanner.next();
+
+			String sql = "";
+			switch (searchType) {
+			case "n":
+				sql = "select * from countries where common_name LIKE '"
+						+ searchTerm + "%';";
+				break;
+			case "r":
+				sql = "select * from countries where region LIKE '"
+						+ searchTerm + "%';";
+				break;
+			default:
+				System.err.println("Invalid search type.");
+				break;
+			}
+
+			ResultSet rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String common_name = rs.getString("common_name");
+				String official_name = rs.getString("official_name");
+				String cca2 = rs.getString("cca2");
+				String ccn3 = rs.getString("ccn3");
+				String cca3 = rs.getString("cca3");
+				String cioc = rs.getString("cioc");
+				boolean independent = rs.getBoolean("independent");
+				String country_status = rs.getString("country_status");
+				boolean un_member = rs.getBoolean("un_member");
+				String idd_root = rs.getString("idd_root");
+				String region = rs.getString("region");
+				String subregion = rs.getString("subregion");
+				float latitude = rs.getFloat("latitude");
+				float logitude = rs.getFloat("logitude");
+				boolean land_locked = rs.getBoolean("land_locked");
+				float area = rs.getFloat("area");
+				String eng_f = rs.getString("eng_f");
+				String eng_m = rs.getString("eng_m");
+				String fra_f = rs.getString("fra_f");
+				String fra_m = rs.getString("fra_m");
+				String flag = rs.getString("flag");
+				String google_maps = rs.getString("google_maps");
+				String open_street_maps = rs.getString("open_street_maps");
+				int c_population = rs.getInt("c_population");
+				String gini_year = rs.getString("gini_year");
+				float gini_val = rs.getFloat("gini_val");
+				String fifa = rs.getString("fifa");
+				String car_side = rs.getString("car_side");
+				String flag_png = rs.getString("flag_png");
+				String flag_svg = rs.getString("flag_svg");
+				String flag_alt = rs.getString("flag_alt");
+				String coa_png = rs.getString("coa_png");
+				String coa_svg = rs.getString("coa_svg");
+				String start_of_week = rs.getString("start_of_week");
+				float capital_lat = rs.getFloat("capital_lat");
+				float capital_long = rs.getFloat("capital_long");
+				String postal_format = rs.getString("postal_format");
+				String postal_regex = rs.getString("postal_regex");
+
+				System.out.println(id + ", " + common_name + ", " + official_name + ", " + cca2 + ", " + ccn3 + ", "
+						+ cca3 + ", " + cioc + ", " + independent + ", " + country_status + ", " + un_member + ", "
+						+ idd_root + ", " + region + ", " + subregion + ", " + latitude + ", " + logitude + ", "
+						+ land_locked + ", " + area + ", " + eng_f + ", " + eng_m + ", " + fra_f + ", " + fra_m + ", "
+						+ flag + ", " + google_maps + ", " + open_street_maps + ", " + c_population + ", " + gini_year
+						+ ", " + gini_val + ", " + fifa + ", " + car_side + ", " + flag_png + ", " + flag_svg + ", "
+						+ flag_alt + ", " + coa_png + ", " + coa_svg + ", " + start_of_week + ", " + capital_lat + ", "
+						+ capital_long + ", " + postal_format + ", " + postal_regex);
+			}
+
+			con.close();
+		} catch (Exception ex) {
+			System.err.println("****************************************************************************************************");
+			System.err.println("ENTER (c) or (r) to search");
+			System.err.println(ex);
+			System.err.println("****************************************************************************************************");
+		}
+	}
 
 }
